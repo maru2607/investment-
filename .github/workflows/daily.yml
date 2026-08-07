@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run analysis
-        run: python scripts/analyze.py
+        run: python investment-/scripts/analyze.py
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
