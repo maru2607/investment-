@@ -1,16 +1,5 @@
 """
 ETF買い時/売り時判定スクリプト
-
-watchlist.json に登録された銘柄について、
-- 52週高値からの下落率
-- 200日移動平均線・乖離率
-- RSI(14)
-- CCI(20)
-- MACD(ゴールデンクロス/デッドクロス)
-- PER(取得できる場合のみ)
-を計算し、シグナルをスコアリングして signals.json に出力する。
-
-GitHub Actions から定期実行されることを想定。
 """
 
 import json
@@ -21,11 +10,11 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-ROOT = Path(__file__).resolve().parent.parent
-WATCHLIST_PATH = ROOT / "watchlist.json"
-SIGNALS_PATH = ROOT / "signals.json"
+# ファイルを直接カレントディレクトリから読み込むように変更
+WATCHLIST_PATH = Path("watchlist.json")
+SIGNALS_PATH = Path("signals.json")
 
-LOOKBACK_DAYS = 400  # 200日MAや52週高値計算に十分な余裕を持たせる
+LOOKBACK_DAYS = 400
 
 
 def calc_rsi(close: pd.Series, period: int = 14) -> pd.Series:
@@ -74,7 +63,6 @@ def analyze_ticker(symbol: str, name: str):
             "error": "十分な価格データを取得できませんでした",
         }
 
-    # yfinance が MultiIndex 列を返す場合に対応
     if isinstance(df.columns, pd.MultiIndex):
         df.columns = df.columns.get_level_values(0)
 
@@ -95,7 +83,7 @@ def analyze_ticker(symbol: str, name: str):
         prev_hist = hist.iloc[-2]
         curr_hist = hist.iloc[-1]
         if prev_hist < 0 <= curr_hist:
-            macd_cross = "golden"  # デッドクロスからゴールデンクロスへ
+            macd_cross = "golden"
         elif prev_hist > 0 >= curr_hist:
             macd_cross = "dead"
 
@@ -105,7 +93,6 @@ def analyze_ticker(symbol: str, name: str):
 
     per = get_per(symbol)
 
-    # --- スコアリング ---
     buy_score = 0
     sell_score = 0
     reasons_buy = []
