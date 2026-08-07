@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF シグナル・ウォッチ</title>
+<style>
+  :root{
+    --bg:#0B1220;
+    --surface:#131B2E;
+    --surface-2:#1B2540;
+    --line:#2A3550;
+    --text:#E4E9F2;
+    --muted:#7C8AA8;
+    --buy:#3DDC97;
+    --sell:#FF6B6B;
+    --hold:#7C8AA8;
+    --mono: "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
+    --sans: -apple-system, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    padding:24px 16px 80px;
+    line-height:1.6;
+  }
+  header{
+    margin-bottom:24px;
+  }
+  h1{
+    font-size:1.4rem;
+    letter-spacing:0.02em;
+    margin:0 0 4px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+  .updated{
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  section{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:16px;
+  }
+  section h2{
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+  .card{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:10px;
+  }
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:8px;
+  }
+  .symbol{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:1rem;
+  }
+  .name{
+    color:var(--muted);
+    font-size:0.78rem;
+  }
+  .price{
+    font-family:var(--mono);
+    font-size:1rem;
+  }
+  .badge{
+    font-family:var(--mono);
+    font-size:0.7rem;
+    font-weight:700;
+    padding:3px 8px;
+    border-radius:999px;
+    letter-spacing:0.05em;
+  }
+  .badge.buy{ background:rgba(61,220,151,0.15); color:var(--buy); }
+  .badge.sell{ background:rgba(255,107,107,0.15); color:var(--sell); }
+  .badge.hold{ background:rgba(124,138,168,0.15); color:var(--hold); }
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:10px;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--muted);
+  }
+  .stats div span{ display:block; color:var(--text); font-size:0.85rem; }
+  .reasons{
+    margin-top:10px;
+    font-size:0.78rem;
+  }
+  .reasons li{ margin-bottom:2px; }
+  .reasons.buy-reasons li{ color:var(--buy); }
+  .reasons.sell-reasons li{ color:var(--sell); }
+  .row{
+    display:flex;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  input[type=text]{
+    flex:1;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:0.9rem;
+  }
+  button{
+    background:var(--buy);
+    color:#04150D;
+    border:none;
+    border-radius:8px;
+    padding:10px 14px;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  button.secondary{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--text);
+  }
+  button.danger{
+    background:var(--sell);
+    color:#2A0808;
+  }
+  .watch-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:0.85rem;
+  }
+  .watch-item:last-child{ border-bottom:none; }
+  .status-msg{
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  details summary{
+    cursor:pointer;
+    color:var(--muted);
+    font-size:0.8rem;
+  }
+  .token-box{ margin-top:10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ETF シグナル・ウォッチ</h1>
+  <div class="sub">200日線・RSI・CCI・MACD・52週高値からの下落率・PERを毎日自動チェック</div>
+  <div class="updated" id="updated">読み込み中...</div>
+</header>
+
+<section>
+  <h2>現在のシグナル</h2>
+  <div id="signals-list">読み込み中...</div>
+</section>
+
+<section>
+  <h2>ウォッチ銘柄の管理</h2>
+  <div id="watch-list"></div>
+
+  <div class="row" style="margin-top:12px;">
+    <input type="text" id="new-symbol" placeholder="ティッカー 例: VOO / 1557.T">
+  </div>
+  <div class="row">
+    <input type="text" id="new-name" placeholder="表示名(任意)">
+    <button id="add-btn">追加</button>
+  </div>
+
+  <details class="token-box">
+    <summary>GitHub連携の設定(初回のみ)</summary>
+    <div class="status-msg">
+      銘柄を追加/削除するには、この端末に GitHub の Personal Access Token(repo権限)を保存する必要があります。
+      トークンはこの端末のブラウザ内(localStorage)にのみ保存され、GitHubには送信されません(GitHub APIへの認証にのみ使用)。
+    </div>
+    <div class="row" style="margin-top:8px;">
+      <input type="text" id="gh-owner" placeholder="GitHubユーザー名">
+      <input type="text" id="gh-repo" placeholder="リポジトリ名">
+    </div>
+    <div class="row">
+      <input type="text" id="gh-token" placeholder="Personal Access Token">
+      <button class="secondary" id="save-token-btn">保存</button>
+    </div>
+    <div class="status-msg" id="token-status"></div>
+  </details>
+</section>
+
+<script>
+const SIGNALS_URL = "signals.json";
+const els = {
+  updated: document.getElementById("updated"),
+  signalsList: document.getElementById("signals-list"),
+  watchList: document.getElementById("watch-list"),
+  newSymbol: document.getElementById("new-symbol"),
+  newName: document.getElementById("new-name"),
+  addBtn: document.getElementById("add-btn"),
+  ghOwner: document.getElementById("gh-owner"),
+  ghRepo: document.getElementById("gh-repo"),
+  ghToken: document.getElementById("gh-token"),
+  saveTokenBtn: document.getElementById("save-token-btn"),
+  tokenStatus: document.getElementById("token-status"),
+};
+
+function loadConfig(){
+  return {
+    owner: localStorage.getItem("gh_owner") || "",
+    repo: localStorage.getItem("gh_repo") || "",
+    token: localStorage.getItem("gh_token") || "",
+  };
+}
+
+els.ghOwner.value = loadConfig().owner;
+els.ghRepo.value = loadConfig().repo;
+
+els.saveTokenBtn.addEventListener("click", () => {
+  localStorage.setItem("gh_owner", els.ghOwner.value.trim());
+  localStorage.setItem("gh_repo", els.ghRepo.value.trim());
+  if (els.ghToken.value.trim()) {
+    localStorage.setItem("gh_token", els.ghToken.value.trim());
+  }
+  els.ghToken.value = "";
+  els.tokenStatus.textContent = "保存しました。";
+});
+
+async function fetchSignals(){
+  try{
+    const res = await fetch(SIGNALS_URL, { cache: "no-store" });
+    const data = await res.json();
+    renderSignals(data);
+  }catch(e){
+    els.signalsList.textContent = "signals.json をまだ取得できません(初回のActions実行後に表示されます)。";
+    els.updated.textContent = "";
+  }
+}
+
+function badgeLabel(signal){
+  if(signal === "buy") return "買いシグナル";
+  if(signal === "sell") return "売りシグナル";
+  return "様子見";
+}
+
+function renderSignals(data){
+  els.updated.textContent = "最終更新: " + new Date(data.updated_at).toLocaleString("ja-JP");
+  els.signalsList.innerHTML = "";
+  data.results.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "card";
+    if(r.error){
+      card.innerHTML = `<div class="card-top"><span class="symbol">${r.symbol}</span></div>
+        <div class="status-msg">取得エラー: ${r.error}</div>`;
+      els.signalsList.appendChild(card);
+      return;
+    }
+    const badgeClass = r.signal === "buy" ? "buy" : r.signal === "sell" ? "sell" : "hold";
+    let reasonsHtml = "";
+    if(r.reasons_buy && r.reasons_buy.length){
+      reasonsHtml += `<ul class="reasons buy-reasons">${r.reasons_buy.map(x=>`<li>+ ${x}</li>`).join("")}</ul>`;
+    }
+    if(r.reasons_sell && r.reasons_sell.length){
+      reasonsHtml += `<ul class="reasons sell-reasons">${r.reasons_sell.map(x=>`<li>- ${x}</li>`).join("")}</ul>`;
+    }
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <div class="symbol">${r.symbol}</div>
+          <div class="name">${r.name || ""}</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="price">${r.price ?? "-"}</div>
+          <span class="badge ${badgeClass}">${badgeLabel(r.signal)}</span>
+        </div>
+      </div>
+      <div class="stats">
+        <div>52週高値比<span>${r.drawdown_from_52w_high_pct ?? "-"}%</span></div>
+        <div>200MA乖離<span>${r.ma200_deviation_pct ?? "-"}%</span></div>
+        <div>RSI(14)<span>${r.rsi14 ?? "-"}</span></div>
+        <div>CCI(20)<span>${r.cci20 ?? "-"}</span></div>
+        <div>MACD<span>${r.macd_cross ?? "-"}</span></div>
+        <div>PER<span>${r.per ?? "-"}</span></div>
+      </div>
+      ${reasonsHtml}
+    `;
+    els.signalsList.appendChild(card);
+  });
+}
+
+async function ghApiRequest(path, options={}){
+  const cfg = loadConfig();
+  if(!cfg.owner || !cfg.repo || !cfg.token){
+    alert("先に「GitHub連携の設定」でユーザー名・リポジトリ名・トークンを保存してください。");
+    throw new Error("missing config");
+  }
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      "Authorization": `Bearer ${cfg.token}`,
+      "Accept": "application/vnd.github+json",
+      ...(options.headers || {}),
+    },
+  });
+  if(!res.ok){
+    const t = await res.text();
+    throw new Error(`GitHub API error: ${res.status} ${t}`);
+  }
+  return res.json();
+}
+
+async function loadWatchlist(){
+  try{
+    const cfg = loadConfig();
+    let watchlist;
+    if(cfg.owner && cfg.repo){
+      const res = await fetch(`https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/watchlist.json`, { cache: "no-store" });
+      watchlist = await res.json();
+    }else{
+      const res = await fetch("watchlist.json", { cache: "no-store" });
+      watchlist = await res.json();
+    }
+    renderWatchlist(watchlist);
+  }catch(e){
+    els.watchList.textContent = "watchlist.json を読み込めませんでした。";
+  }
+}
+
+function renderWatchlist(watchlist){
+  els.watchList.innerHTML = "";
+  watchlist.tickers.forEach((t, idx) => {
+    const row = document.createElement("div");
+    row.className = "watch-item";
+    row.innerHTML = `<span>${t.symbol} <span style="color:var(--muted)">${t.name || ""}</span></span>`;
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "削除";
+    delBtn.className = "danger";
+    delBtn.style.padding = "4px 10px";
+    delBtn.style.fontSize = "0.72rem";
+    delBtn.addEventListener("click", () => removeTicker(idx));
+    row.appendChild(delBtn);
+    els.watchList.appendChild(row);
+  });
+}
+
+async function updateWatchlistFile(newWatchlist, commitMessage){
+  const current = await ghApiRequest("watchlist.json");
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(newWatchlist, null, 2))));
+  await ghApiRequest("watchlist.json", {
+    method: "PUT",
+    body: JSON.stringify({
+      message: commitMessage,
+      content: content,
+      sha: current.sha,
+    }),
+  });
+}
+
+async function getCurrentWatchlistRaw(){
+  const cfg = loadConfig();
+  const res = await fetch(`https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/watchlist.json?t=${Date.now()}`, { cache: "no-store" });
+  return res.json();
+}
+
+els.addBtn.addEventListener("click", async () => {
+  const symbol = els.newSymbol.value.trim();
+  const name = els.newName.value.trim();
+  if(!symbol) return;
+  els.addBtn.textContent = "追加中...";
+  els.addBtn.disabled = true;
+  try{
+    const wl = await getCurrentWatchlistRaw();
+    wl.tickers.push({ symbol, name });
+    await updateWatchlistFile(wl, `Add ${symbol} to watchlist`);
+    els.newSymbol.value = "";
+    els.newName.value = "";
+    await loadWatchlist();
+    alert("追加しました。次回のActions実行(最大24時間以内、または手動実行)でシグナルに反映されます。");
+  }catch(e){
+    alert("追加に失敗しました: " + e.message);
+  }finally{
+    els.addBtn.textContent = "追加";
+    els.addBtn.disabled = false;
+  }
+});
+
+async function removeTicker(idx){
+  if(!confirm("この銘柄をウォッチリストから削除しますか?")) return;
+  try{
+    const wl = await getCurrentWatchlistRaw();
+    wl.tickers.splice(idx, 1);
+    await updateWatchlistFile(wl, `Remove ticker from watchlist`);
+    await loadWatchlist();
+  }catch(e){
+    alert("削除に失敗しました: " + e.message);
+  }
+}
+
+fetchSignals();
+loadWatchlist();
+</script>
+</body>
+</html>

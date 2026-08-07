@@ -1,0 +1,8 @@
+{
+  "tickers": [
+    { "symbol": "1557.T", "name": "SPDR S&P500 ETF(東証)" },
+    { "symbol": "1306.T", "name": "TOPIX連動型ETF" },
+    { "symbol": "VOO", "name": "Vanguard S&P500 ETF(米国)" },
+    { "symbol": "VT", "name": "Vanguard Total World Stock ETF" }
+  ]
+}
