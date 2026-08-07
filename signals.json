@@ -1,5 +1,76 @@
 {
-  "updated_at": null,
-  "results": [],
+  "updated_at": "2026-08-07T14:26:41.729629Z",
+  "results": [
+    {
+      "symbol": "1557.T",
+      "name": "SPDR S&P500 ETF(東証)",
+      "price": 121700.0,
+      "drawdown_from_52w_high_pct": -0.69,
+      "ma200_deviation_pct": 10.3,
+      "rsi14": 54.64,
+      "cci20": 50.66,
+      "macd_cross": null,
+      "per": 10.27,
+      "signal": "hold",
+      "buy_score": 0,
+      "sell_score": 0,
+      "reasons_buy": [],
+      "reasons_sell": []
+    },
+    {
+      "symbol": "1306.T",
+      "name": "TOPIX連動型ETF",
+      "price": 425.1,
+      "drawdown_from_52w_high_pct": -0.49,
+      "ma200_deviation_pct": 12.6,
+      "rsi14": 56.23,
+      "cci20": 98.72,
+      "macd_cross": "golden",
+      "per": 17.66,
+      "signal": "hold",
+      "buy_score": 1,
+      "sell_score": 0,
+      "reasons_buy": [
+        "MACDがゴールデンクロス"
+      ],
+      "reasons_sell": []
+    },
+    {
+      "symbol": "VOO",
+      "name": "Vanguard S&P500 ETF(米国)",
+      "price": 710.34,
+      "drawdown_from_52w_high_pct": 0.0,
+      "ma200_deviation_pct": 10.4,
+      "rsi14": 65.96,
+      "cci20": 157.12,
+      "macd_cross": null,
+      "per": 27.83,
+      "signal": "hold",
+      "buy_score": 0,
+      "sell_score": 1,
+      "reasons_buy": [],
+      "reasons_sell": [
+        "CCI(157.1)が+100超で買われすぎ"
+      ]
+    },
+    {
+      "symbol": "VT",
+      "name": "Vanguard Total World Stock ETF",
+      "price": 161.14,
+      "drawdown_from_52w_high_pct": 0.0,
+      "ma200_deviation_pct": 9.99,
+      "rsi14": 64.81,
+      "cci20": 169.15,
+      "macd_cross": null,
+      "per": 23.18,
+      "signal": "hold",
+      "buy_score": 0,
+      "sell_score": 1,
+      "reasons_buy": [],
+      "reasons_sell": [
+        "CCI(169.1)が+100超で買われすぎ"
+      ]
+    }
+  ],
   "has_active_signal": false
 }
