@@ -27,6 +27,10 @@
     {
       "symbol": "VDC",
       "name": ""
+    },
+    {
+      "symbol": "VHT",
+      "name": ""
     }
   ]
 }
