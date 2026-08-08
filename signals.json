@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-07T23:52:52.453142Z",
+  "updated_at": "2026-08-08T00:00:39.744328Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -44,7 +44,7 @@
       "rsi14": 66.14,
       "cci20": 160.11,
       "macd_cross": null,
-      "per": null,
+      "per": 27.85,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 1,
@@ -62,7 +62,7 @@
       "rsi14": 65.16,
       "cci20": 172.02,
       "macd_cross": null,
-      "per": null,
+      "per": 23.2,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 1,
@@ -80,7 +80,7 @@
       "rsi14": 50.52,
       "cci20": 45.43,
       "macd_cross": null,
-      "per": null,
+      "per": 124.49,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 0,
