@@ -67,6 +67,10 @@
     {
       "symbol": "BTC",
       "name": ""
+    },
+    {
+      "symbol": "ETH",
+      "name": ""
     }
   ]
 }
