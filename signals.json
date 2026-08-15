@@ -1,37 +1,41 @@
 {
-  "updated_at": "2026-08-14T23:41:21.613284Z",
+  "updated_at": "2026-08-15T23:01:39.957862Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": null,
-      "drawdown_from_52w_high_pct": null,
-      "ma200_deviation_pct": null,
-      "rsi14": 59.17,
-      "cci20": null,
+      "price": 124000.0,
+      "drawdown_from_52w_high_pct": 0.0,
+      "ma200_deviation_pct": 11.92,
+      "rsi14": 63.2,
+      "cci20": 166.56,
       "macd_cross": null,
       "per": 10.46,
       "signal": "hold",
       "buy_score": 0,
-      "sell_score": 0,
+      "sell_score": 1,
       "reasons_buy": [],
-      "reasons_sell": []
+      "reasons_sell": [
+        "CCI(166.6)が+100超で買われすぎ"
+      ]
     },
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": null,
-      "drawdown_from_52w_high_pct": null,
-      "ma200_deviation_pct": null,
-      "rsi14": 63.0,
-      "cci20": null,
+      "price": 437.8,
+      "drawdown_from_52w_high_pct": 0.0,
+      "ma200_deviation_pct": 15.31,
+      "rsi14": 64.47,
+      "cci20": 194.97,
       "macd_cross": null,
       "per": 18.87,
       "signal": "hold",
       "buy_score": 0,
-      "sell_score": 0,
+      "sell_score": 1,
       "reasons_buy": [],
-      "reasons_sell": []
+      "reasons_sell": [
+        "CCI(195.0)が+100超で買われすぎ"
+      ]
     },
     {
       "symbol": "VOO",
@@ -56,7 +60,7 @@
       "drawdown_from_52w_high_pct": -0.09,
       "ma200_deviation_pct": 10.3,
       "rsi14": 66.39,
-      "cci20": 100.32,
+      "cci20": 100.35,
       "macd_cross": null,
       "per": null,
       "signal": "hold",
@@ -74,7 +78,7 @@
       "drawdown_from_52w_high_pct": -1.92,
       "ma200_deviation_pct": -0.34,
       "rsi14": 49.01,
-      "cci20": 51.52,
+      "cci20": 51.66,
       "macd_cross": null,
       "per": null,
       "signal": "hold",
@@ -90,7 +94,7 @@
       "drawdown_from_52w_high_pct": -44.62,
       "ma200_deviation_pct": -8.82,
       "rsi14": 59.71,
-      "cci20": 105.88,
+      "cci20": 105.96,
       "macd_cross": null,
       "per": null,
       "signal": "buy",
@@ -101,7 +105,7 @@
         "52週高値から25%超の大幅下落(暴落水準)"
       ],
       "reasons_sell": [
-        "CCI(105.9)が+100超で買われすぎ"
+        "CCI(106.0)が+100超で買われすぎ"
       ]
     },
     {
@@ -109,9 +113,9 @@
       "name": "",
       "price": 233.28,
       "drawdown_from_52w_high_pct": -3.43,
-      "ma200_deviation_pct": 4.52,
-      "rsi14": 57.34,
-      "cci20": 91.03,
+      "ma200_deviation_pct": 4.64,
+      "rsi14": 56.7,
+      "cci20": 85.66,
       "macd_cross": "golden",
       "per": 25.87,
       "signal": "hold",
@@ -143,9 +147,9 @@
       "name": "",
       "price": 314.7,
       "drawdown_from_52w_high_pct": -0.64,
-      "ma200_deviation_pct": 10.57,
-      "rsi14": 62.98,
-      "cci20": 81.96,
+      "ma200_deviation_pct": 10.51,
+      "rsi14": 62.7,
+      "cci20": 81.18,
       "macd_cross": null,
       "per": null,
       "signal": "hold",
@@ -177,7 +181,7 @@
       "drawdown_from_52w_high_pct": -0.5,
       "ma200_deviation_pct": 8.89,
       "rsi14": 65.45,
-      "cci20": 81.11,
+      "cci20": 81.27,
       "macd_cross": null,
       "per": 27.31,
       "signal": "hold",
@@ -191,18 +195,17 @@
       "name": "",
       "price": 29.34,
       "drawdown_from_52w_high_pct": 0.0,
-      "ma200_deviation_pct": 11.81,
-      "rsi14": 70.21,
-      "cci20": 138.18,
+      "ma200_deviation_pct": 12.01,
+      "rsi14": 69.6,
+      "cci20": 134.42,
       "macd_cross": null,
       "per": 22.14,
-      "signal": "sell",
+      "signal": "hold",
       "buy_score": 0,
-      "sell_score": 2,
+      "sell_score": 1,
       "reasons_buy": [],
       "reasons_sell": [
-        "RSI(70.2)が70超で買われすぎ",
-        "CCI(138.2)が+100超で買われすぎ"
+        "CCI(134.4)が+100超で買われすぎ"
       ]
     },
     {
@@ -210,9 +213,9 @@
       "name": "",
       "price": 50.41,
       "drawdown_from_52w_high_pct": -0.26,
-      "ma200_deviation_pct": 11.09,
-      "rsi14": 62.17,
-      "cci20": 143.31,
+      "ma200_deviation_pct": 10.92,
+      "rsi14": 61.53,
+      "cci20": 142.73,
       "macd_cross": null,
       "per": 18.48,
       "signal": "hold",
@@ -220,7 +223,7 @@
       "sell_score": 1,
       "reasons_buy": [],
       "reasons_sell": [
-        "CCI(143.3)が+100超で買われすぎ"
+        "CCI(142.7)が+100超で買われすぎ"
       ]
     },
     {
@@ -287,14 +290,14 @@
       "drawdown_from_52w_high_pct": -49.96,
       "ma200_deviation_pct": -18.2,
       "rsi14": 44.14,
-      "cci20": -126.62,
+      "cci20": -126.33,
       "macd_cross": null,
       "per": null,
       "signal": "buy",
       "buy_score": 4,
       "sell_score": 0,
       "reasons_buy": [
-        "CCI(-126.6)が-100未満で売られすぎ",
+        "CCI(-126.3)が-100未満で売られすぎ",
         "52週高値から-50.0%下落(押し目)",
         "52週高値から25%超の大幅下落(暴落水準)",
         "200日線より-18.2%下(トレンド割れ)"
@@ -308,7 +311,7 @@
       "drawdown_from_52w_high_pct": -60.65,
       "ma200_deviation_pct": -20.3,
       "rsi14": 51.56,
-      "cci20": -55.7,
+      "cci20": -56.04,
       "macd_cross": null,
       "per": null,
       "signal": "buy",
