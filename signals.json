@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-15T23:01:39.957862Z",
+  "updated_at": "2026-08-16T23:00:42.659655Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -75,10 +75,10 @@
       "symbol": "AGG",
       "name": "",
       "price": 97.48,
-      "drawdown_from_52w_high_pct": -1.92,
-      "ma200_deviation_pct": -0.34,
-      "rsi14": 49.01,
-      "cci20": 51.66,
+      "drawdown_from_52w_high_pct": -2.26,
+      "ma200_deviation_pct": -0.67,
+      "rsi14": 45.37,
+      "cci20": -36.86,
       "macd_cross": null,
       "per": null,
       "signal": "hold",
@@ -147,9 +147,9 @@
       "name": "",
       "price": 314.7,
       "drawdown_from_52w_high_pct": -0.64,
-      "ma200_deviation_pct": 10.51,
-      "rsi14": 62.7,
-      "cci20": 81.18,
+      "ma200_deviation_pct": 10.57,
+      "rsi14": 62.98,
+      "cci20": 81.45,
       "macd_cross": null,
       "per": null,
       "signal": "hold",
@@ -195,17 +195,18 @@
       "name": "",
       "price": 29.34,
       "drawdown_from_52w_high_pct": 0.0,
-      "ma200_deviation_pct": 12.01,
-      "rsi14": 69.6,
-      "cci20": 134.42,
+      "ma200_deviation_pct": 11.81,
+      "rsi14": 70.21,
+      "cci20": 138.52,
       "macd_cross": null,
       "per": 22.14,
-      "signal": "hold",
+      "signal": "sell",
       "buy_score": 0,
-      "sell_score": 1,
+      "sell_score": 2,
       "reasons_buy": [],
       "reasons_sell": [
-        "CCI(134.4)が+100超で買われすぎ"
+        "RSI(70.2)が70超で買われすぎ",
+        "CCI(138.5)が+100超で買われすぎ"
       ]
     },
     {
@@ -213,9 +214,9 @@
       "name": "",
       "price": 50.41,
       "drawdown_from_52w_high_pct": -0.26,
-      "ma200_deviation_pct": 10.92,
-      "rsi14": 61.53,
-      "cci20": 142.73,
+      "ma200_deviation_pct": 11.09,
+      "rsi14": 62.17,
+      "cci20": 143.94,
       "macd_cross": null,
       "per": 18.48,
       "signal": "hold",
@@ -223,7 +224,7 @@
       "sell_score": 1,
       "reasons_buy": [],
       "reasons_sell": [
-        "CCI(142.7)が+100超で買われすぎ"
+        "CCI(143.9)が+100超で買われすぎ"
       ]
     },
     {
