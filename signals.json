@@ -1,21 +1,23 @@
 {
-  "updated_at": "2026-08-21T23:43:33.259285Z",
+  "updated_at": "2026-08-22T23:02:06.938841Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": null,
-      "drawdown_from_52w_high_pct": null,
-      "ma200_deviation_pct": null,
-      "rsi14": 52.74,
-      "cci20": null,
-      "macd_cross": null,
+      "price": 121450.0,
+      "drawdown_from_52w_high_pct": -2.06,
+      "ma200_deviation_pct": 9.07,
+      "rsi14": 48.73,
+      "cci20": -11.25,
+      "macd_cross": "dead",
       "per": 10.25,
       "signal": "hold",
       "buy_score": 0,
-      "sell_score": 0,
+      "sell_score": 1,
       "reasons_buy": [],
-      "reasons_sell": []
+      "reasons_sell": [
+        "MACDがデッドクロス"
+      ]
     },
     {
       "symbol": "1306.T",
@@ -88,7 +90,7 @@
       "drawdown_from_52w_high_pct": -40.61,
       "ma200_deviation_pct": -2.84,
       "rsi14": 66.81,
-      "cci20": 136.83,
+      "cci20": 136.89,
       "macd_cross": null,
       "per": null,
       "signal": "buy",
@@ -99,7 +101,7 @@
         "52週高値から25%超の大幅下落(暴落水準)"
       ],
       "reasons_sell": [
-        "CCI(136.8)が+100超で買われすぎ"
+        "CCI(136.9)が+100超で買われすぎ"
       ]
     },
     {
@@ -109,7 +111,7 @@
       "drawdown_from_52w_high_pct": -4.06,
       "ma200_deviation_pct": 3.54,
       "rsi14": 51.93,
-      "cci20": -20.09,
+      "cci20": -21.27,
       "macd_cross": null,
       "per": 25.83,
       "signal": "hold",
@@ -141,7 +143,7 @@
       "drawdown_from_52w_high_pct": -0.54,
       "ma200_deviation_pct": 14.52,
       "rsi14": 68.86,
-      "cci20": 157.53,
+      "cci20": 157.56,
       "macd_cross": null,
       "per": 30.84,
       "signal": "hold",
@@ -149,7 +151,7 @@
       "sell_score": 1,
       "reasons_buy": [],
       "reasons_sell": [
-        "CCI(157.5)が+100超で買われすぎ"
+        "CCI(157.6)が+100超で買われすぎ"
       ]
     },
     {
@@ -159,7 +161,7 @@
       "drawdown_from_52w_high_pct": -1.23,
       "ma200_deviation_pct": 8.7,
       "rsi14": 56.28,
-      "cci20": 16.27,
+      "cci20": 16.35,
       "macd_cross": null,
       "per": 21.39,
       "signal": "hold",
@@ -175,7 +177,7 @@
       "drawdown_from_52w_high_pct": -1.09,
       "ma200_deviation_pct": 7.79,
       "rsi14": 55.97,
-      "cci20": 12.15,
+      "cci20": 12.2,
       "macd_cross": null,
       "per": 26.15,
       "signal": "hold",
@@ -228,7 +230,7 @@
       "drawdown_from_52w_high_pct": -4.28,
       "ma200_deviation_pct": 9.47,
       "rsi14": 50.17,
-      "cci20": 14.72,
+      "cci20": 14.71,
       "macd_cross": "dead",
       "per": 30.51,
       "signal": "hold",
@@ -305,7 +307,7 @@
       "drawdown_from_52w_high_pct": -49.43,
       "ma200_deviation_pct": 4.23,
       "rsi14": 83.04,
-      "cci20": 330.36,
+      "cci20": 330.35,
       "macd_cross": null,
       "per": null,
       "signal": "buy",
