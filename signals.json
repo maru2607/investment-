@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-06T00:10:12.428093Z",
+  "updated_at": "2026-09-07T00:16:08.584429Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -10,7 +10,7 @@
       "rsi14": 45.29,
       "cci20": -146.88,
       "macd_cross": null,
-      "per": 10.21,
+      "per": 10.16,
       "signal": "hold",
       "buy_score": 1,
       "sell_score": 0,
@@ -22,13 +22,13 @@
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 427.5,
-      "drawdown_from_52w_high_pct": -2.35,
-      "ma200_deviation_pct": 10.63,
-      "rsi14": 51.48,
-      "cci20": -29.06,
+      "price": 430.8,
+      "drawdown_from_52w_high_pct": -1.6,
+      "ma200_deviation_pct": 11.35,
+      "rsi14": 54.63,
+      "cci20": 23.67,
       "macd_cross": null,
-      "per": 18.42,
+      "per": 18.57,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 0,
@@ -123,20 +123,18 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3578.0,
-      "drawdown_from_52w_high_pct": -2.0,
-      "ma200_deviation_pct": 14.19,
-      "rsi14": 57.32,
-      "cci20": 84.22,
-      "macd_cross": "dead",
-      "per": 14.94,
+      "price": 3590.0,
+      "drawdown_from_52w_high_pct": -1.67,
+      "ma200_deviation_pct": 14.39,
+      "rsi14": 58.51,
+      "cci20": 75.79,
+      "macd_cross": null,
+      "per": 14.99,
       "signal": "hold",
       "buy_score": 0,
-      "sell_score": 1,
+      "sell_score": 0,
       "reasons_buy": [],
-      "reasons_sell": [
-        "MACDがデッドクロス"
-      ]
+      "reasons_sell": []
     },
     {
       "symbol": "VHT",
