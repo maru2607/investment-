@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-20T00:18:51.397231Z",
+  "updated_at": "2026-09-21T00:26:31.807311Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -74,7 +74,7 @@
       "rsi14": 37.66,
       "cci20": -100.61,
       "macd_cross": null,
-      "per": 122.4,
+      "per": null,
       "signal": "hold",
       "buy_score": 1,
       "sell_score": 0,
