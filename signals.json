@@ -1,16 +1,16 @@
 {
-  "updated_at": "2026-09-27T00:48:53.252513Z",
+  "updated_at": "2026-09-28T01:05:24.800425Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": 121600.0,
-      "drawdown_from_52w_high_pct": -1.69,
-      "ma200_deviation_pct": 7.68,
-      "rsi14": 59.37,
-      "cci20": 66.47,
+      "price": 121450.0,
+      "drawdown_from_52w_high_pct": -1.81,
+      "ma200_deviation_pct": 7.47,
+      "rsi14": 58.36,
+      "cci20": 60.75,
       "macd_cross": null,
-      "per": 10.26,
+      "per": 10.25,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 0,
@@ -20,20 +20,20 @@
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 430.3,
-      "drawdown_from_52w_high_pct": -1.71,
-      "ma200_deviation_pct": 9.94,
-      "rsi14": 55.93,
-      "cci20": 56.0,
-      "macd_cross": "golden",
-      "per": 18.04,
+      "price": 432.4,
+      "drawdown_from_52w_high_pct": -1.23,
+      "ma200_deviation_pct": 10.36,
+      "rsi14": 58.03,
+      "cci20": 105.36,
+      "macd_cross": null,
+      "per": 18.13,
       "signal": "hold",
-      "buy_score": 1,
-      "sell_score": 0,
-      "reasons_buy": [
-        "MACDがゴールデンクロス"
-      ],
-      "reasons_sell": []
+      "buy_score": 0,
+      "sell_score": 1,
+      "reasons_buy": [],
+      "reasons_sell": [
+        "CCI(105.4)が+100超で買われすぎ"
+      ]
     },
     {
       "symbol": "VOO",
@@ -128,11 +128,11 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3585.0,
-      "drawdown_from_52w_high_pct": -1.81,
-      "ma200_deviation_pct": 12.48,
-      "rsi14": 55.75,
-      "cci20": 26.06,
+      "price": 3587.0,
+      "drawdown_from_52w_high_pct": -1.75,
+      "ma200_deviation_pct": 12.39,
+      "rsi14": 55.97,
+      "cci20": 48.11,
       "macd_cross": null,
       "per": 14.5,
       "signal": "hold",
