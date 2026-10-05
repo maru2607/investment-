@@ -1,16 +1,16 @@
 {
-  "updated_at": "2026-10-04T01:56:23.423971Z",
+  "updated_at": "2026-10-05T01:10:05.675932Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": 120800.0,
-      "drawdown_from_52w_high_pct": -2.34,
-      "ma200_deviation_pct": 6.6,
-      "rsi14": 53.19,
-      "cci20": 62.02,
+      "price": 121500.0,
+      "drawdown_from_52w_high_pct": -1.77,
+      "ma200_deviation_pct": 7.14,
+      "rsi14": 56.98,
+      "cci20": 86.12,
       "macd_cross": null,
-      "per": 10.19,
+      "per": 10.25,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 0,
@@ -20,19 +20,19 @@
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 430.2,
-      "drawdown_from_52w_high_pct": -1.74,
-      "ma200_deviation_pct": 9.33,
-      "rsi14": 53.87,
-      "cci20": 103.25,
+      "price": 434.9,
+      "drawdown_from_52w_high_pct": -0.66,
+      "ma200_deviation_pct": 10.4,
+      "rsi14": 58.34,
+      "cci20": 154.09,
       "macd_cross": null,
-      "per": 18.03,
+      "per": 18.23,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 1,
       "reasons_buy": [],
       "reasons_sell": [
-        "CCI(103.3)が+100超で買われすぎ"
+        "CCI(154.1)が+100超で買われすぎ"
       ]
     },
     {
@@ -78,7 +78,7 @@
       "rsi14": 30.44,
       "cci20": -95.93,
       "macd_cross": null,
-      "per": null,
+      "per": 120.22,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 0,
@@ -127,18 +127,18 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3480.0,
-      "drawdown_from_52w_high_pct": -4.68,
-      "ma200_deviation_pct": 8.5,
-      "rsi14": 43.39,
-      "cci20": -121.64,
+      "price": 3496.0,
+      "drawdown_from_52w_high_pct": -4.25,
+      "ma200_deviation_pct": 8.86,
+      "rsi14": 45.5,
+      "cci20": -104.13,
       "macd_cross": null,
-      "per": 14.07,
+      "per": 14.14,
       "signal": "hold",
       "buy_score": 1,
       "sell_score": 0,
       "reasons_buy": [
-        "CCI(-121.6)が-100未満で売られすぎ"
+        "CCI(-104.1)が-100未満で売られすぎ"
       ],
       "reasons_sell": []
     },
