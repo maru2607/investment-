@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-10T01:53:17.563683Z",
+  "updated_at": "2026-10-11T01:11:38.497294Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": null,
-      "drawdown_from_52w_high_pct": null,
-      "ma200_deviation_pct": null,
-      "rsi14": 60.51,
-      "cci20": null,
+      "price": 122850.0,
+      "drawdown_from_52w_high_pct": -0.68,
+      "ma200_deviation_pct": 8.0,
+      "rsi14": 61.19,
+      "cci20": 90.21,
       "macd_cross": null,
       "per": 10.36,
       "signal": "hold",
