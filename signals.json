@@ -1,36 +1,40 @@
 {
-  "updated_at": "2026-11-01T01:24:17.825734Z",
+  "updated_at": "2026-11-02T01:44:47.878877Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": 120400.0,
-      "drawdown_from_52w_high_pct": -2.66,
-      "ma200_deviation_pct": 4.83,
-      "rsi14": 46.09,
-      "cci20": -95.05,
+      "price": 119850.0,
+      "drawdown_from_52w_high_pct": -3.1,
+      "ma200_deviation_pct": 4.29,
+      "rsi14": 43.41,
+      "cci20": -125.85,
       "macd_cross": null,
-      "per": 10.16,
+      "per": 10.11,
       "signal": "hold",
-      "buy_score": 0,
+      "buy_score": 1,
       "sell_score": 0,
-      "reasons_buy": [],
+      "reasons_buy": [
+        "CCI(-125.8)が-100未満で売られすぎ"
+      ],
       "reasons_sell": []
     },
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 416.4,
-      "drawdown_from_52w_high_pct": -5.45,
-      "ma200_deviation_pct": 3.91,
-      "rsi14": 41.2,
-      "cci20": -99.13,
+      "price": 415.3,
+      "drawdown_from_52w_high_pct": -5.7,
+      "ma200_deviation_pct": 3.57,
+      "rsi14": 40.23,
+      "cci20": -119.6,
       "macd_cross": null,
-      "per": 14.78,
+      "per": 14.74,
       "signal": "hold",
-      "buy_score": 0,
+      "buy_score": 1,
       "sell_score": 0,
-      "reasons_buy": [],
+      "reasons_buy": [
+        "CCI(-119.6)が-100未満で売られすぎ"
+      ],
       "reasons_sell": []
     },
     {
@@ -132,18 +136,20 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3531.0,
-      "drawdown_from_52w_high_pct": -1.91,
-      "ma200_deviation_pct": 9.16,
-      "rsi14": 53.9,
-      "cci20": 78.82,
-      "macd_cross": null,
-      "per": 13.48,
+      "price": 3519.0,
+      "drawdown_from_52w_high_pct": -2.24,
+      "ma200_deviation_pct": 8.68,
+      "rsi14": 52.01,
+      "cci20": 41.95,
+      "macd_cross": "dead",
+      "per": 13.43,
       "signal": "hold",
       "buy_score": 0,
-      "sell_score": 0,
+      "sell_score": 1,
       "reasons_buy": [],
-      "reasons_sell": []
+      "reasons_sell": [
+        "MACDがデッドクロス"
+      ]
     },
     {
       "symbol": "VHT",
