@@ -1,40 +1,39 @@
 {
-  "updated_at": "2026-11-08T01:45:19.326962Z",
+  "updated_at": "2026-11-09T01:53:41.594180Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": 115850.0,
-      "drawdown_from_52w_high_pct": -6.34,
-      "ma200_deviation_pct": 0.66,
-      "rsi14": 33.21,
-      "cci20": -286.84,
+      "price": 116550.0,
+      "drawdown_from_52w_high_pct": -5.77,
+      "ma200_deviation_pct": 1.23,
+      "rsi14": 36.42,
+      "cci20": -193.51,
       "macd_cross": null,
-      "per": 9.77,
+      "per": 9.83,
       "signal": "hold",
       "buy_score": 1,
       "sell_score": 0,
       "reasons_buy": [
-        "CCI(-286.8)が-100未満で売られすぎ"
+        "CCI(-193.5)が-100未満で売られすぎ"
       ],
       "reasons_sell": []
     },
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 388.6,
-      "drawdown_from_52w_high_pct": -11.76,
-      "ma200_deviation_pct": -3.25,
-      "rsi14": 25.41,
-      "cci20": -303.72,
+      "price": 403.2,
+      "drawdown_from_52w_high_pct": -8.45,
+      "ma200_deviation_pct": 0.34,
+      "rsi14": 39.28,
+      "cci20": -172.78,
       "macd_cross": null,
-      "per": 13.79,
-      "signal": "buy",
-      "buy_score": 2,
+      "per": 14.31,
+      "signal": "hold",
+      "buy_score": 1,
       "sell_score": 0,
       "reasons_buy": [
-        "RSI(25.4)が30未満で売られすぎ",
-        "CCI(-303.7)が-100未満で売られすぎ"
+        "CCI(-172.8)が-100未満で売られすぎ"
       ],
       "reasons_sell": []
     },
@@ -83,7 +82,7 @@
       "rsi14": 63.79,
       "cci20": 106.15,
       "macd_cross": null,
-      "per": null,
+      "per": 123.15,
       "signal": "hold",
       "buy_score": 0,
       "sell_score": 1,
@@ -131,22 +130,20 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3390.0,
-      "drawdown_from_52w_high_pct": -5.82,
-      "ma200_deviation_pct": 4.38,
-      "rsi14": 39.61,
-      "cci20": -236.95,
-      "macd_cross": "dead",
-      "per": 12.94,
+      "price": 3446.0,
+      "drawdown_from_52w_high_pct": -4.27,
+      "ma200_deviation_pct": 6.02,
+      "rsi14": 45.23,
+      "cci20": -181.59,
+      "macd_cross": null,
+      "per": 13.15,
       "signal": "hold",
       "buy_score": 1,
-      "sell_score": 1,
+      "sell_score": 0,
       "reasons_buy": [
-        "CCI(-236.9)が-100未満で売られすぎ"
+        "CCI(-181.6)が-100未満で売られすぎ"
       ],
-      "reasons_sell": [
-        "MACDがデッドクロス"
-      ]
+      "reasons_sell": []
     },
     {
       "symbol": "VHT",
