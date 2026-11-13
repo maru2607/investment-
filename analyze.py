@@ -1,14 +1,18 @@
 """
-ETF買い時/売り時判定スクリプト
+ETF押し目判定スクリプト
 
-watchlist.json に登録された銘柄について、
-- 52週高値からの下落率
-- 200日移動平均線・乖離率
-- RSI(14)
-- CCI(20)
-- MACD(ゴールデンクロス/デッドクロス)
-- PER(取得できる場合のみ)
-を計算し、シグナルをスコアリングして signals.json に出力する。
+watchlist.json に登録された銘柄について、平日22:30のシグナルチェックと
+同じ5指標で「押し目かどうか」だけを判定し、signals.json に出力する。
+
+判定指標(該当数を数える方式。売りシグナルは出さない):
+- RSI(14) が 35 以下
+- CCI(14) が -100 以下(ボラティリティの高い銘柄は -150 以下)
+- 50日移動平均線からの乖離が -3% 以下
+- 200日移動平均線からの乖離が -5% 以下
+- 過去1年(252営業日)高値からの下落率が -10% 以下
+
+該当 2つ以上 = 「強めの押し目」、1つ = 「押し目」、0 = 「押し目なし」。
+これはスポット買いの目安であり、買い推奨ではない。
 
 GitHub Actions から定期実行されることを想定。
 """
@@ -25,11 +29,32 @@ import yfinance as yf
 # GitHub Actions ではリポジトリのチェックアウト先が GITHUB_WORKSPACE に入っているので、
 # それを優先的に使う(analyze.py の設置場所が多少ズレても watchlist.json を正しく見つけられるように)。
 _workspace = os.environ.get("GITHUB_WORKSPACE")
-ROOT = Path(_workspace) if _workspace else Path(__file__).resolve().parent.parent
+ROOT = Path(_workspace) if _workspace else Path(__file__).resolve().parent
 WATCHLIST_PATH = ROOT / "watchlist.json"
 SIGNALS_PATH = ROOT / "signals.json"
 
-LOOKBACK_DAYS = 400  # 200日MAや52週高値計算に十分な余裕を持たせる
+LOOKBACK_DAYS = 730  # 200日MAと252日高値を安定して計算するため2年分取得する
+
+# yfinance のシンボル表記ゆれ対策。
+# 「BTC」「ETH」のままだと暗号資産ではない別証券を指してしまうため、正式シンボルへ寄せる。
+SYMBOL_ALIASES = {
+    "BTC": "BTC-USD",
+    "ETH": "ETH-USD",
+}
+
+# ボラティリティが高く、CCI -100 ではシグナルが頻出しすぎる銘柄。
+# 過去3年の実測で、CCI(14) が -150 以下になる日の割合が全銘柄で 6〜8% に揃うため、
+# この4銘柄だけ CCI の閾値を -150 にする(他は -100)。
+HIGH_VOLATILITY_SYMBOLS = {"BTC-USD", "ETH-USD", "SPXL", "SOXL"}
+LEVERAGED_SYMBOLS = {"SPXL", "SOXL"}
+
+CCI_THRESHOLD_NORMAL = -100
+CCI_THRESHOLD_HIGH_VOL = -150
+
+RSI_THRESHOLD = 35
+MA50_DEV_THRESHOLD = -3
+MA200_DEV_THRESHOLD = -5
+DRAWDOWN_THRESHOLD = -10
 
 
 def calc_rsi(close: pd.Series, period: int = 14) -> pd.Series:
@@ -43,7 +68,7 @@ def calc_rsi(close: pd.Series, period: int = 14) -> pd.Series:
     return rsi
 
 
-def calc_cci(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 20) -> pd.Series:
+def calc_cci(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 14) -> pd.Series:
     tp = (high + low + close) / 3
     sma = tp.rolling(period).mean()
     mad = tp.rolling(period).apply(lambda x: np.mean(np.abs(x - x.mean())), raw=True)
@@ -51,32 +76,13 @@ def calc_cci(high: pd.Series, low: pd.Series, close: pd.Series, period: int = 20
     return cci
 
 
-def calc_macd(close: pd.Series, fast=12, slow=26, signal=9):
-    ema_fast = close.ewm(span=fast, adjust=False).mean()
-    ema_slow = close.ewm(span=slow, adjust=False).mean()
-    macd = ema_fast - ema_slow
-    signal_line = macd.ewm(span=signal, adjust=False).mean()
-    hist = macd - signal_line
-    return macd, signal_line, hist
-
-
-def get_per(ticker: str):
-    try:
-        info = yf.Ticker(ticker).info
-        per = info.get("trailingPE") or info.get("forwardPE")
-        if per is None:
-            return None
-        per = float(per)
-        if not np.isfinite(per):
-            return None
-        return round(per, 2)
-    except Exception:
-        return None
-
-
 def analyze_ticker(symbol: str, name: str):
-    df = yf.download(symbol, period=f"{LOOKBACK_DAYS}d", interval="1d", progress=False, auto_adjust=True)
-    if df.empty or len(df) < 210:
+    fetch_symbol = SYMBOL_ALIASES.get(symbol, symbol)
+    high_vol = fetch_symbol in HIGH_VOLATILITY_SYMBOLS
+    cci_threshold = CCI_THRESHOLD_HIGH_VOL if high_vol else CCI_THRESHOLD_NORMAL
+
+    df = yf.download(fetch_symbol, period=f"{LOOKBACK_DAYS}d", interval="1d", progress=False, auto_adjust=True)
+    if df.empty or len(df) < 260:
         return {
             "symbol": symbol,
             "name": name,
@@ -91,96 +97,69 @@ def analyze_ticker(symbol: str, name: str):
     high = df["High"]
     low = df["Low"]
 
-    ma200 = close.rolling(200).mean()
-    high_52w = close.rolling(252, min_periods=100).max()
-    drawdown_pct = (close.iloc[-1] - high_52w.iloc[-1]) / high_52w.iloc[-1] * 100
+    price_last = float(close.iloc[-1])
+
+    ma50 = close.rolling(50).mean().iloc[-1]
+    ma200 = close.rolling(200).mean().iloc[-1]
+    ma50_dev_pct = (price_last - ma50) / ma50 * 100 if pd.notna(ma50) else None
+    ma200_dev_pct = (price_last - ma200) / ma200 * 100 if pd.notna(ma200) else None
+
+    high_1y = close.rolling(252, min_periods=100).max().iloc[-1]
+    drawdown_pct = (price_last - high_1y) / high_1y * 100 if pd.notna(high_1y) else None
 
     rsi = calc_rsi(close).iloc[-1]
     cci = calc_cci(high, low, close).iloc[-1]
-    macd, signal_line, hist = calc_macd(close)
 
-    macd_cross = None
-    if len(hist) > 2 and not hist.iloc[-2:].isna().any():
-        prev_hist = hist.iloc[-2]
-        curr_hist = hist.iloc[-1]
-        if prev_hist < 0 <= curr_hist:
-            macd_cross = "golden"  # デッドクロスからゴールデンクロスへ
-        elif prev_hist > 0 >= curr_hist:
-            macd_cross = "dead"
+    # --- 5指標の該当判定 ---
+    hits = []
 
-    ma200_last = ma200.iloc[-1]
-    price_last = close.iloc[-1]
-    ma200_dev_pct = (price_last - ma200_last) / ma200_last * 100 if pd.notna(ma200_last) else None
+    if pd.notna(rsi) and rsi <= RSI_THRESHOLD:
+        hits.append(f"RSI({rsi:.1f})が{RSI_THRESHOLD}以下で売られすぎ")
 
-    per = get_per(symbol)
+    if pd.notna(cci) and cci <= cci_threshold:
+        hits.append(f"CCI({cci:.1f})が{cci_threshold}以下で売られすぎ")
 
-    # --- スコアリング ---
-    buy_score = 0
-    sell_score = 0
-    reasons_buy = []
-    reasons_sell = []
+    if ma50_dev_pct is not None and ma50_dev_pct <= MA50_DEV_THRESHOLD:
+        hits.append(f"50日線より{ma50_dev_pct:.1f}%下")
 
-    if pd.notna(rsi):
-        if rsi < 30:
-            buy_score += 1
-            reasons_buy.append(f"RSI({rsi:.1f})が30未満で売られすぎ")
-        elif rsi > 70:
-            sell_score += 1
-            reasons_sell.append(f"RSI({rsi:.1f})が70超で買われすぎ")
+    if ma200_dev_pct is not None and ma200_dev_pct <= MA200_DEV_THRESHOLD:
+        hits.append(f"200日線より{ma200_dev_pct:.1f}%下")
 
-    if pd.notna(cci):
-        if cci < -100:
-            buy_score += 1
-            reasons_buy.append(f"CCI({cci:.1f})が-100未満で売られすぎ")
-        elif cci > 100:
-            sell_score += 1
-            reasons_sell.append(f"CCI({cci:.1f})が+100超で買われすぎ")
+    if drawdown_pct is not None and drawdown_pct <= DRAWDOWN_THRESHOLD:
+        hits.append(f"1年高値から{drawdown_pct:.1f}%下落")
 
-    if pd.notna(drawdown_pct):
-        if drawdown_pct <= -15:
-            buy_score += 1
-            reasons_buy.append(f"52週高値から{drawdown_pct:.1f}%下落(押し目)")
-        if drawdown_pct <= -25:
-            buy_score += 1
-            reasons_buy.append("52週高値から25%超の大幅下落(暴落水準)")
-
-    if ma200_dev_pct is not None:
-        if ma200_dev_pct <= -10:
-            buy_score += 1
-            reasons_buy.append(f"200日線より{ma200_dev_pct:.1f}%下(トレンド割れ)")
-        elif ma200_dev_pct >= 20:
-            sell_score += 1
-            reasons_sell.append(f"200日線より+{ma200_dev_pct:.1f}%上(過熱)")
-
-    if macd_cross == "golden":
-        buy_score += 1
-        reasons_buy.append("MACDがゴールデンクロス")
-    elif macd_cross == "dead":
-        sell_score += 1
-        reasons_sell.append("MACDがデッドクロス")
-
-    if buy_score >= 2:
-        signal = "buy"
-    elif sell_score >= 2:
-        signal = "sell"
+    hit_count = len(hits)
+    if hit_count >= 2:
+        signal = "strong"
+    elif hit_count == 1:
+        signal = "dip"
     else:
-        signal = "hold"
+        signal = "none"
+
+    # 長期トレンドの状態(200日線との位置関係)。押し目の質を見分けるための併記情報。
+    if ma200_dev_pct is None:
+        trend_label = None
+    elif ma200_dev_pct <= MA200_DEV_THRESHOLD:
+        trend_label = "長期トレンドが崩れた下落"
+    else:
+        trend_label = "長期トレンドを維持した押し目"
 
     return {
         "symbol": symbol,
         "name": name,
-        "price": round(float(price_last), 2),
-        "drawdown_from_52w_high_pct": round(float(drawdown_pct), 2) if pd.notna(drawdown_pct) else None,
-        "ma200_deviation_pct": round(float(ma200_dev_pct), 2) if ma200_dev_pct is not None else None,
+        "price": round(price_last, 2),
         "rsi14": round(float(rsi), 2) if pd.notna(rsi) else None,
-        "cci20": round(float(cci), 2) if pd.notna(cci) else None,
-        "macd_cross": macd_cross,
-        "per": per,
+        "cci14": round(float(cci), 2) if pd.notna(cci) else None,
+        "cci_threshold": cci_threshold,
+        "ma50_deviation_pct": round(float(ma50_dev_pct), 2) if ma50_dev_pct is not None else None,
+        "ma200_deviation_pct": round(float(ma200_dev_pct), 2) if ma200_dev_pct is not None else None,
+        "drawdown_from_1y_high_pct": round(float(drawdown_pct), 2) if drawdown_pct is not None else None,
+        "high_volatility": high_vol,
+        "leveraged": fetch_symbol in LEVERAGED_SYMBOLS,
+        "trend_label": trend_label,
         "signal": signal,
-        "buy_score": buy_score,
-        "sell_score": sell_score,
-        "reasons_buy": reasons_buy,
-        "reasons_sell": reasons_sell,
+        "hit_count": hit_count,
+        "hits": hits,
     }
 
 
@@ -206,9 +185,9 @@ def main():
         results.append(result)
 
     output = {
-        "updated_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
         "results": results,
-        "has_active_signal": any(r.get("signal") in ("buy", "sell") for r in results),
+        "has_active_signal": any(r.get("signal") in ("dip", "strong") for r in results),
     }
 
     output = _sanitize(output)

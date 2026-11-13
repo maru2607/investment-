@@ -65,12 +65,12 @@
       "name": ""
     },
     {
-      "symbol": "BTC",
-      "name": ""
+      "symbol": "BTC-USD",
+      "name": "ビットコイン"
     },
     {
-      "symbol": "ETH",
-      "name": ""
+      "symbol": "ETH-USD",
+      "name": "イーサリアム"
     }
   ]
 }

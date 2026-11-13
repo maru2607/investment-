@@ -6,15 +6,19 @@
 <title>ETF シグナル・ウォッチ</title>
 <style>
   :root{
-    --bg:#0B1220;
-    --surface:#131B2E;
-    --surface-2:#1B2540;
-    --line:#2A3550;
-    --text:#E4E9F2;
-    --muted:#7C8AA8;
-    --buy:#3DDC97;
-    --sell:#FF6B6B;
-    --hold:#7C8AA8;
+    --bg:#FAF5EE;
+    --surface:#FFFFFF;
+    --surface-2:#FDF9F3;
+    --line:#EADFD2;
+    --text:#4A4239;
+    --muted:#9A8B7A;
+    --accent:#8FAE8B;
+    --strong:#D96C4F;
+    --strong-bg:#FBEAE3;
+    --dip:#C98A2D;
+    --dip-bg:#FAF0DA;
+    --none:#9A8B7A;
+    --none-bg:#F1EAE0;
     --mono: "SFMono-Regular", "JetBrains Mono", "Menlo", monospace;
     --sans: -apple-system, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
   }
@@ -27,9 +31,7 @@
     padding:24px 16px 80px;
     line-height:1.6;
   }
-  header{
-    margin-bottom:24px;
-  }
+  header{ margin-bottom:20px; }
   h1{
     font-size:1.4rem;
     letter-spacing:0.02em;
@@ -45,6 +47,15 @@
     color:var(--muted);
     margin-top:8px;
   }
+  .note{
+    background:#F3EDDF;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:0.8rem;
+    color:var(--text);
+    margin-bottom:16px;
+  }
   section{
     background:var(--surface);
     border:1px solid var(--line);
@@ -54,11 +65,17 @@
   }
   section h2{
     font-size:0.8rem;
-    text-transform:uppercase;
     letter-spacing:0.08em;
     color:var(--muted);
     margin:0 0 12px;
   }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+  }
+  .section-head h2{ margin:0; }
   .card{
     background:var(--surface-2);
     border:1px solid var(--line);
@@ -86,16 +103,27 @@
     font-size:1rem;
   }
   .badge{
-    font-family:var(--mono);
     font-size:0.7rem;
     font-weight:700;
     padding:3px 8px;
     border-radius:999px;
     letter-spacing:0.05em;
+    white-space:nowrap;
   }
-  .badge.buy{ background:rgba(61,220,151,0.15); color:var(--buy); }
-  .badge.sell{ background:rgba(255,107,107,0.15); color:var(--sell); }
-  .badge.hold{ background:rgba(124,138,168,0.15); color:var(--hold); }
+  .badge.strong{ background:var(--strong-bg); color:var(--strong); }
+  .badge.dip{ background:var(--dip-bg); color:var(--dip); }
+  .badge.none{ background:var(--none-bg); color:var(--none); }
+  .tag{
+    display:inline-block;
+    font-size:0.68rem;
+    padding:2px 7px;
+    border-radius:999px;
+    background:#EFE7F2;
+    color:#7A6390;
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .tag.lev{ background:#FBEAE3; color:var(--strong); }
   .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -106,13 +134,18 @@
     color:var(--muted);
   }
   .stats div span{ display:block; color:var(--text); font-size:0.85rem; }
-  .reasons{
-    margin-top:10px;
+  .hits{
+    margin:10px 0 0;
+    padding-left:18px;
     font-size:0.78rem;
+    color:var(--text);
   }
-  .reasons li{ margin-bottom:2px; }
-  .reasons.buy-reasons li{ color:var(--buy); }
-  .reasons.sell-reasons li{ color:var(--sell); }
+  .hits li{ margin-bottom:2px; }
+  .trend{
+    margin-top:8px;
+    font-size:0.75rem;
+    color:var(--muted);
+  }
   .row{
     display:flex;
     gap:8px;
@@ -125,11 +158,12 @@
     color:var(--text);
     border-radius:8px;
     padding:10px 12px;
-    font-size:0.9rem;
+    font-size:16px;
+    min-width:0;
   }
   button{
-    background:var(--buy);
-    color:#04150D;
+    background:var(--accent);
+    color:#FFFFFF;
     border:none;
     border-radius:8px;
     padding:10px 14px;
@@ -143,8 +177,12 @@
     color:var(--text);
   }
   button.danger{
-    background:var(--sell);
-    color:#2A0808;
+    background:#E8A08D;
+    color:#5C2417;
+  }
+  button.small{
+    padding:6px 12px;
+    font-size:0.78rem;
   }
   .watch-item{
     display:flex;
@@ -167,19 +205,34 @@
     font-size:0.8rem;
   }
   .token-box{ margin-top:10px; }
+  .token-box ol{
+    font-size:0.78rem;
+    color:var(--text);
+    padding-left:20px;
+    margin:8px 0;
+  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>ETF シグナル・ウォッチ</h1>
-  <div class="sub">200日線・RSI・CCI・MACD・52週高値からの下落率・PERを毎日自動チェック</div>
+  <div class="sub">RSI・CCI・50日線・200日線・1年高値からの下落率の5指標で、押し目を毎日自動チェック</div>
   <div class="updated" id="updated">読み込み中...</div>
 </header>
 
+<div class="note">
+  このアプリは<strong>毎朝7:30頃に、前日終値で確定判定</strong>した結果です。平日22:30の投資スレッドのチェックは、当日の暫定価格で早めに見る役割なので、同じ日でも結論が少しずれることがあります。
+  「押し目」はスポット買いの<strong>目安</strong>で、買い推奨ではありません。値動きの大きい銘柄（BTC・ETH・SPXL・SOXL）は、CCIの基準だけ -150 に厳しくしています。
+</div>
+
 <section>
-  <h2>現在のシグナル</h2>
+  <div class="section-head">
+    <h2>現在のシグナル</h2>
+    <button class="secondary small" id="refresh-btn">今すぐ更新</button>
+  </div>
   <div id="signals-list">読み込み中...</div>
+  <div class="status-msg" id="refresh-status"></div>
 </section>
 
 <section>
@@ -197,8 +250,17 @@
   <details class="token-box">
     <summary>GitHub連携の設定(初回のみ)</summary>
     <div class="status-msg">
-      銘柄を追加/削除するには、この端末に GitHub の Personal Access Token(repo権限)を保存する必要があります。
-      トークンはこの端末のブラウザ内(localStorage)にのみ保存され、GitHubには送信されません(GitHub APIへの認証にのみ使用)。
+      銘柄を追加/削除するには、この端末に GitHub の Personal Access Token を保存する必要があります。
+      トークンはこの端末のブラウザ内(localStorage)にのみ保存され、GitHub APIへの認証にのみ使われます。
+    </div>
+    <ol>
+      <li>GitHub の Settings → Developer settings → Personal access tokens → <strong>Fine-grained tokens</strong> で新しいトークンを作る</li>
+      <li>Repository access は <strong>Only select repositories</strong> で、このリポジトリ(investment-)だけを選ぶ</li>
+      <li>Permissions は <strong>Contents: Read and write</strong> と <strong>Actions: Read and write</strong>(今すぐ更新ボタン用)の2つだけにする</li>
+      <li>発行されたトークンを下の欄に貼って保存する</li>
+    </ol>
+    <div class="status-msg">
+      ※ 古い形式のトークン(classic、repo権限)は全リポジトリに効いてしまうので使わないでください。fine-grained でこのリポジトリだけに絞るのが安全です。
     </div>
     <div class="row" style="margin-top:8px;">
       <input type="text" id="gh-owner" placeholder="GitHubユーザー名">
@@ -229,6 +291,8 @@ const els = {
   newSymbol: document.getElementById("new-symbol"),
   newName: document.getElementById("new-name"),
   addBtn: document.getElementById("add-btn"),
+  refreshBtn: document.getElementById("refresh-btn"),
+  refreshStatus: document.getElementById("refresh-status"),
   ghOwner: document.getElementById("gh-owner"),
   ghRepo: document.getElementById("gh-repo"),
   ghToken: document.getElementById("gh-token"),
@@ -304,6 +368,40 @@ els.testConnBtn.addEventListener("click", async () => {
 
 renderSavedStatus();
 
+els.refreshBtn.addEventListener("click", async () => {
+  const cfg = loadConfig();
+  if(!cfg.owner || !cfg.repo || !cfg.token){
+    els.refreshStatus.textContent = "先に下の「GitHub連携の設定」でユーザー名・リポジトリ名・トークンを保存してください。";
+    return;
+  }
+  els.refreshBtn.disabled = true;
+  els.refreshStatus.textContent = "更新をリクエスト中...";
+  try{
+    const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/workflows/daily.yml/dispatches`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${cfg.token}`,
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ref: "main" }),
+    });
+    if(res.status === 204){
+      els.refreshStatus.textContent = "更新をリクエストしました。1〜3分ほどで結果が差し替わるので、少し待ってページを再読み込みしてください。";
+    }else if(res.status === 403){
+      els.refreshStatus.textContent = "エラー(403): トークンに Actions: Read and write の権限が必要です。";
+    }else if(res.status === 404){
+      els.refreshStatus.textContent = "エラー(404): ワークフローが見つかりません。リポジトリ名を確認してください。";
+    }else{
+      els.refreshStatus.textContent = `エラー(${res.status}): 更新をリクエストできませんでした。`;
+    }
+  }catch(e){
+    els.refreshStatus.textContent = "通信エラー: " + e.message;
+  }finally{
+    els.refreshBtn.disabled = false;
+  }
+});
+
 async function fetchSignals(){
   try{
     const res = await fetch(SIGNALS_URL, { cache: "no-store" });
@@ -316,9 +414,9 @@ async function fetchSignals(){
 }
 
 function badgeLabel(signal){
-  if(signal === "buy") return "買いシグナル";
-  if(signal === "sell") return "売りシグナル";
-  return "様子見";
+  if(signal === "strong") return "強めの押し目";
+  if(signal === "dip") return "押し目";
+  return "押し目なし";
 }
 
 function renderSignals(data){
@@ -333,18 +431,23 @@ function renderSignals(data){
       els.signalsList.appendChild(card);
       return;
     }
-    const badgeClass = r.signal === "buy" ? "buy" : r.signal === "sell" ? "sell" : "hold";
-    let reasonsHtml = "";
-    if(r.reasons_buy && r.reasons_buy.length){
-      reasonsHtml += `<ul class="reasons buy-reasons">${r.reasons_buy.map(x=>`<li>+ ${x}</li>`).join("")}</ul>`;
+    const badgeClass = r.signal === "strong" ? "strong" : r.signal === "dip" ? "dip" : "none";
+    let tags = "";
+    if(r.leveraged) tags += `<span class="tag lev">3倍レバレッジ</span>`;
+    else if(r.high_volatility) tags += `<span class="tag">値動き大</span>`;
+    let hitsHtml = "";
+    if(r.hits && r.hits.length){
+      hitsHtml = `<ul class="hits">${r.hits.map(x=>`<li>${x}</li>`).join("")}</ul>`;
     }
-    if(r.reasons_sell && r.reasons_sell.length){
-      reasonsHtml += `<ul class="reasons sell-reasons">${r.reasons_sell.map(x=>`<li>- ${x}</li>`).join("")}</ul>`;
+    let trendHtml = "";
+    if(r.hit_count >= 1 && r.trend_label){
+      trendHtml = `<div class="trend">${r.trend_label}（200日線 ${r.ma200_deviation_pct ?? "-"}%、1年高値から ${r.drawdown_from_1y_high_pct ?? "-"}%）</div>`;
     }
+    const cciLabel = r.high_volatility ? "CCI(14) ※基準-150" : "CCI(14)";
     card.innerHTML = `
       <div class="card-top">
         <div>
-          <div class="symbol">${r.symbol}</div>
+          <div class="symbol">${r.symbol}${tags}</div>
           <div class="name">${r.name || ""}</div>
         </div>
         <div style="text-align:right;">
@@ -353,14 +456,14 @@ function renderSignals(data){
         </div>
       </div>
       <div class="stats">
-        <div>52週高値比<span>${r.drawdown_from_52w_high_pct ?? "-"}%</span></div>
+        <div>1年高値比<span>${r.drawdown_from_1y_high_pct ?? "-"}%</span></div>
+        <div>50MA乖離<span>${r.ma50_deviation_pct ?? "-"}%</span></div>
         <div>200MA乖離<span>${r.ma200_deviation_pct ?? "-"}%</span></div>
         <div>RSI(14)<span>${r.rsi14 ?? "-"}</span></div>
-        <div>CCI(20)<span>${r.cci20 ?? "-"}</span></div>
-        <div>MACD<span>${r.macd_cross ?? "-"}</span></div>
-        <div>PER<span>${r.per ?? "-"}</span></div>
+        <div>${cciLabel}<span>${r.cci14 ?? "-"}</span></div>
       </div>
-      ${reasonsHtml}
+      ${hitsHtml}
+      ${trendHtml}
     `;
     els.signalsList.appendChild(card);
   });
