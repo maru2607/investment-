@@ -184,6 +184,16 @@
     padding:6px 12px;
     font-size:0.78rem;
   }
+  a.link-btn{
+    display:inline-block;
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--text);
+    text-decoration:none;
+    font-weight:700;
+    padding:6px 12px;
+    font-size:0.78rem;
+  }
   .watch-item{
     display:flex;
     justify-content:space-between;
@@ -229,10 +239,10 @@
 <section>
   <div class="section-head">
     <h2>現在のシグナル</h2>
-    <button class="secondary small" id="refresh-btn">今すぐ更新</button>
+    <a class="link-btn" href="https://github.com/maru2607/investment-/actions/workflows/daily.yml" target="_blank" rel="noopener">GitHubで手動更新</a>
   </div>
   <div id="signals-list">読み込み中...</div>
-  <div class="status-msg" id="refresh-status"></div>
+  <div class="status-msg" id="refresh-status">手動で更新したいときは「GitHubで手動更新」から開いたページで「Run workflow」を押してください。実行後1〜3分ほどで結果が差し替わります（このページの再読み込みが必要です）。</div>
 </section>
 
 <section>
@@ -256,7 +266,7 @@
     <ol>
       <li>GitHub の Settings → Developer settings → Personal access tokens → <strong>Fine-grained tokens</strong> で新しいトークンを作る</li>
       <li>Repository access は <strong>Only select repositories</strong> で、このリポジトリ(investment-)だけを選ぶ</li>
-      <li>Permissions は <strong>Contents: Read and write</strong> と <strong>Actions: Read and write</strong>(今すぐ更新ボタン用)の2つだけにする</li>
+      <li>Permissions は <strong>Contents: Read and write</strong> の1つだけにする(手動更新はGitHubのページから行うので、トークンにActions権限は不要です)</li>
       <li>発行されたトークンを下の欄に貼って保存する</li>
     </ol>
     <div class="status-msg">
@@ -291,7 +301,6 @@ const els = {
   newSymbol: document.getElementById("new-symbol"),
   newName: document.getElementById("new-name"),
   addBtn: document.getElementById("add-btn"),
-  refreshBtn: document.getElementById("refresh-btn"),
   refreshStatus: document.getElementById("refresh-status"),
   ghOwner: document.getElementById("gh-owner"),
   ghRepo: document.getElementById("gh-repo"),
@@ -367,40 +376,6 @@ els.testConnBtn.addEventListener("click", async () => {
 });
 
 renderSavedStatus();
-
-els.refreshBtn.addEventListener("click", async () => {
-  const cfg = loadConfig();
-  if(!cfg.owner || !cfg.repo || !cfg.token){
-    els.refreshStatus.textContent = "先に下の「GitHub連携の設定」でユーザー名・リポジトリ名・トークンを保存してください。";
-    return;
-  }
-  els.refreshBtn.disabled = true;
-  els.refreshStatus.textContent = "更新をリクエスト中...";
-  try{
-    const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/workflows/daily.yml/dispatches`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${cfg.token}`,
-        "Accept": "application/vnd.github+json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ref: "main" }),
-    });
-    if(res.status === 204){
-      els.refreshStatus.textContent = "更新をリクエストしました。1〜3分ほどで結果が差し替わるので、少し待ってページを再読み込みしてください。";
-    }else if(res.status === 403){
-      els.refreshStatus.textContent = "エラー(403): トークンに Actions: Read and write の権限が必要です。";
-    }else if(res.status === 404){
-      els.refreshStatus.textContent = "エラー(404): ワークフローが見つかりません。リポジトリ名を確認してください。";
-    }else{
-      els.refreshStatus.textContent = `エラー(${res.status}): 更新をリクエストできませんでした。`;
-    }
-  }catch(e){
-    els.refreshStatus.textContent = "通信エラー: " + e.message;
-  }finally{
-    els.refreshBtn.disabled = false;
-  }
-});
 
 async function fetchSignals(){
   try{
