@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T02:04:08.894644Z",
+  "updated_at": "2026-11-15T08:43:56.783588Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -294,47 +294,47 @@
     {
       "symbol": "BTC-USD",
       "name": "ビットコイン",
-      "price": 62867.45,
-      "rsi14": 19.06,
-      "cci14": -265.23,
+      "price": 64749.68,
+      "rsi14": 22.6,
+      "cci14": -187.56,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -21.53,
-      "ma200_deviation_pct": -13.84,
-      "drawdown_from_1y_high_pct": -27.41,
+      "ma50_deviation_pct": -18.8,
+      "ma200_deviation_pct": -11.2,
+      "drawdown_from_1y_high_pct": -25.23,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 5,
       "hits": [
-        "RSI(19.1)が35以下で売られすぎ",
-        "CCI(-265.2)が-150以下で売られすぎ",
-        "50日線より-21.5%下",
-        "200日線より-13.8%下",
-        "1年高値から-27.4%下落"
+        "RSI(22.6)が35以下で売られすぎ",
+        "CCI(-187.6)が-150以下で売られすぎ",
+        "50日線より-18.8%下",
+        "200日線より-11.2%下",
+        "1年高値から-25.2%下落"
       ]
     },
     {
       "symbol": "ETH-USD",
       "name": "イーサリアム",
-      "price": 1734.23,
-      "rsi14": 18.95,
-      "cci14": -207.54,
+      "price": 1800.19,
+      "rsi14": 23.1,
+      "cci14": -155.67,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -27.58,
-      "ma200_deviation_pct": -19.13,
-      "drawdown_from_1y_high_pct": -37.54,
+      "ma50_deviation_pct": -24.28,
+      "ma200_deviation_pct": -15.97,
+      "drawdown_from_1y_high_pct": -35.16,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 5,
       "hits": [
-        "RSI(19.0)が35以下で売られすぎ",
-        "CCI(-207.5)が-150以下で売られすぎ",
-        "50日線より-27.6%下",
-        "200日線より-19.1%下",
-        "1年高値から-37.5%下落"
+        "RSI(23.1)が35以下で売られすぎ",
+        "CCI(-155.7)が-150以下で売られすぎ",
+        "50日線より-24.3%下",
+        "200日線より-16.0%下",
+        "1年高値から-35.2%下落"
       ]
     }
   ],
