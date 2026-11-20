@@ -1,47 +1,47 @@
 {
-  "updated_at": "2026-11-20T03:40:55.888438Z",
+  "updated_at": "2026-11-20T14:13:28.882002Z",
   "results": [
     {
       "symbol": "1557.T",
       "name": "SPDR S&P500 ETF(東証)",
-      "price": 113900.0,
-      "rsi14": 32.91,
-      "cci14": -193.99,
+      "price": 113700.0,
+      "rsi14": 32.78,
+      "cci14": -189.34,
       "cci_threshold": -100,
-      "ma50_deviation_pct": -5.16,
-      "ma200_deviation_pct": -1.44,
-      "drawdown_from_1y_high_pct": -7.91,
+      "ma50_deviation_pct": -5.27,
+      "ma200_deviation_pct": -1.65,
+      "drawdown_from_1y_high_pct": -8.08,
       "high_volatility": false,
       "leveraged": false,
       "trend_label": "長期トレンドを維持した押し目",
       "signal": "strong",
       "hit_count": 3,
       "hits": [
-        "RSI(32.9)が35以下で売られすぎ",
-        "CCI(-194.0)が-100以下で売られすぎ",
-        "50日線より-5.2%下"
+        "RSI(32.8)が35以下で売られすぎ",
+        "CCI(-189.3)が-100以下で売られすぎ",
+        "50日線より-5.3%下"
       ]
     },
     {
       "symbol": "1306.T",
       "name": "TOPIX連動型ETF",
-      "price": 389.5,
-      "rsi14": 32.7,
-      "cci14": -144.05,
+      "price": 386.2,
+      "rsi14": 31.25,
+      "cci14": -159.23,
       "cci_threshold": -100,
-      "ma50_deviation_pct": -7.42,
-      "ma200_deviation_pct": -3.42,
-      "drawdown_from_1y_high_pct": -11.56,
+      "ma50_deviation_pct": -8.19,
+      "ma200_deviation_pct": -4.24,
+      "drawdown_from_1y_high_pct": -12.31,
       "high_volatility": false,
       "leveraged": false,
       "trend_label": "長期トレンドを維持した押し目",
       "signal": "strong",
       "hit_count": 4,
       "hits": [
-        "RSI(32.7)が35以下で売られすぎ",
-        "CCI(-144.0)が-100以下で売られすぎ",
-        "50日線より-7.4%下",
-        "1年高値から-11.6%下落"
+        "RSI(31.2)が35以下で売られすぎ",
+        "CCI(-159.2)が-100以下で売られすぎ",
+        "50日線より-8.2%下",
+        "1年高値から-12.3%下落"
       ]
     },
     {
@@ -146,20 +146,20 @@
     {
       "symbol": "1489.T",
       "name": "",
-      "price": 3407.0,
-      "rsi14": 40.65,
-      "cci14": -128.83,
+      "price": 3395.0,
+      "rsi14": 39.74,
+      "cci14": -144.12,
       "cci_threshold": -100,
-      "ma50_deviation_pct": -2.59,
-      "ma200_deviation_pct": 4.06,
-      "drawdown_from_1y_high_pct": -5.35,
+      "ma50_deviation_pct": -2.93,
+      "ma200_deviation_pct": 3.69,
+      "drawdown_from_1y_high_pct": -5.68,
       "high_volatility": false,
       "leveraged": false,
       "trend_label": "長期トレンドを維持した押し目",
       "signal": "dip",
       "hit_count": 1,
       "hits": [
-        "CCI(-128.8)が-100以下で売られすぎ"
+        "CCI(-144.1)が-100以下で売られすぎ"
       ]
     },
     {
@@ -241,19 +241,21 @@
     {
       "symbol": "SPYD",
       "name": "",
-      "price": null,
-      "rsi14": 50.52,
-      "cci14": null,
+      "price": 48.05,
+      "rsi14": 43.66,
+      "cci14": -202.99,
       "cci_threshold": -100,
-      "ma50_deviation_pct": null,
-      "ma200_deviation_pct": null,
-      "drawdown_from_1y_high_pct": null,
+      "ma50_deviation_pct": 0.84,
+      "ma200_deviation_pct": 2.2,
+      "drawdown_from_1y_high_pct": -4.87,
       "high_volatility": false,
       "leveraged": false,
-      "trend_label": null,
-      "signal": "none",
-      "hit_count": 0,
-      "hits": []
+      "trend_label": "長期トレンドを維持した押し目",
+      "signal": "dip",
+      "hit_count": 1,
+      "hits": [
+        "CCI(-203.0)が-100以下で売られすぎ"
+      ]
     },
     {
       "symbol": "QQQ",
@@ -325,45 +327,45 @@
     {
       "symbol": "BTC-USD",
       "name": "ビットコイン",
-      "price": 61951.55,
-      "rsi14": 20.64,
-      "cci14": -106.09,
+      "price": 61787.58,
+      "rsi14": 20.45,
+      "cci14": -93.6,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -20.72,
-      "ma200_deviation_pct": -14.71,
-      "drawdown_from_1y_high_pct": -28.46,
+      "ma50_deviation_pct": -20.46,
+      "ma200_deviation_pct": -14.83,
+      "drawdown_from_1y_high_pct": -28.65,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 4,
       "hits": [
-        "RSI(20.6)が35以下で売られすぎ",
-        "50日線より-20.7%下",
-        "200日線より-14.7%下",
-        "1年高値から-28.5%下落"
+        "RSI(20.5)が35以下で売られすぎ",
+        "50日線より-20.5%下",
+        "200日線より-14.8%下",
+        "1年高値から-28.7%下落"
       ]
     },
     {
       "symbol": "ETH-USD",
       "name": "イーサリアム",
-      "price": 1743.16,
-      "rsi14": 23.39,
-      "cci14": -96.68,
+      "price": 1749.19,
+      "rsi14": 23.58,
+      "cci14": -87.02,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -24.43,
-      "ma200_deviation_pct": -18.25,
-      "drawdown_from_1y_high_pct": -37.22,
+      "ma50_deviation_pct": -23.54,
+      "ma200_deviation_pct": -17.86,
+      "drawdown_from_1y_high_pct": -37.0,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 4,
       "hits": [
-        "RSI(23.4)が35以下で売られすぎ",
-        "50日線より-24.4%下",
-        "200日線より-18.3%下",
-        "1年高値から-37.2%下落"
+        "RSI(23.6)が35以下で売られすぎ",
+        "50日線より-23.5%下",
+        "200日線より-17.9%下",
+        "1年高値から-37.0%下落"
       ]
     }
   ],
