@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-22T02:34:55.372526Z",
+  "updated_at": "2026-11-23T03:01:21.360773Z",
   "results": [
     {
       "symbol": "1557.T",
@@ -336,45 +336,45 @@
     {
       "symbol": "BTC-USD",
       "name": "ビットコイン",
-      "price": 59469.66,
-      "rsi14": 20.28,
-      "cci14": -102.38,
+      "price": 60572.23,
+      "rsi14": 24.6,
+      "cci14": -79.4,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -22.89,
-      "ma200_deviation_pct": -17.89,
-      "drawdown_from_1y_high_pct": -31.33,
+      "ma50_deviation_pct": -20.98,
+      "ma200_deviation_pct": -16.25,
+      "drawdown_from_1y_high_pct": -30.06,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 4,
       "hits": [
-        "RSI(20.3)が35以下で売られすぎ",
-        "50日線より-22.9%下",
-        "200日線より-17.9%下",
-        "1年高値から-31.3%下落"
+        "RSI(24.6)が35以下で売られすぎ",
+        "50日線より-21.0%下",
+        "200日線より-16.2%下",
+        "1年高値から-30.1%下落"
       ]
     },
     {
       "symbol": "ETH-USD",
       "name": "イーサリアム",
-      "price": 1672.33,
-      "rsi14": 25.17,
-      "cci14": -98.23,
+      "price": 1704.88,
+      "rsi14": 28.42,
+      "cci14": -74.9,
       "cci_threshold": -150,
-      "ma50_deviation_pct": -26.17,
-      "ma200_deviation_pct": -21.32,
-      "drawdown_from_1y_high_pct": -39.77,
+      "ma50_deviation_pct": -24.08,
+      "ma200_deviation_pct": -19.66,
+      "drawdown_from_1y_high_pct": -38.6,
       "high_volatility": true,
       "leveraged": false,
       "trend_label": "長期トレンドが崩れた下落",
       "signal": "strong",
       "hit_count": 4,
       "hits": [
-        "RSI(25.2)が35以下で売られすぎ",
-        "50日線より-26.2%下",
-        "200日線より-21.3%下",
-        "1年高値から-39.8%下落"
+        "RSI(28.4)が35以下で売られすぎ",
+        "50日線より-24.1%下",
+        "200日線より-19.7%下",
+        "1年高値から-38.6%下落"
       ]
     }
   ],
